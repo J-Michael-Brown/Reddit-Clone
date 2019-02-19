@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { v4 } from 'uuid';
 
 function NewPostForm(props) {
@@ -8,7 +8,7 @@ function NewPostForm(props) {
 
   function handleNewPostFormSubmission(event) {
     event.preventDefault();
-    props.onNewPostCreation({title: _title.value, image:_image.value, score:0, id: v4()})
+    props.onNewPostCreation({title: _title.value, image:_image.value, score:0, id: v4()});
     _title.value='';
     _image.value='';
   }
@@ -31,11 +31,11 @@ function NewPostForm(props) {
         <button type='submit'>Post!</button>
       </form>
     </div>
-  )
+  );
 }
 
 NewPostForm.propTypes = {
   onNewPostCreation: PropTypes.func.isRequired
-}
+};
 
 export default NewPostForm;
