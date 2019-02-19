@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 // import {v4} from 'uuid'
 import Post from './Post'
 
+const postListStyle = {
+  
+}
+
 function PostList(props){
   return(
-    <div>
+    <div style={postListStyle}>
       {props.masterPostList.map((post)=>
         <Post title = {post.title}
           image = {post.image}
           score = {post.score}
-          key = {post.id}
-        />
+          key = {post.id}/>
       )}
     </div>
   )

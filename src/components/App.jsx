@@ -26,10 +26,18 @@ const MasterPostList=
   }
 ];
 
+const appStylesheet = {
+  width: '650px',
+  display: 'block',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  // background: 'blue'
+}
+
 function App(){
 
   return (
-    <div>
+    <div style={appStylesheet}>
       <Header/>
       <Switch>
         <Route exact path='/' render={()=><PostList masterPostList={MasterPostList}/>}/>
