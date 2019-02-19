@@ -8,7 +8,7 @@ const imageStyle = {
   display: 'block',
   marginLeft: 'auto',
   marginRight: 'auto'
-}
+};
 
 const postStyle={
   marginBottom: '5px',
@@ -17,22 +17,38 @@ const postStyle={
   display: 'block',
   marginLeft: 'auto',
   marginRight: 'auto'
-}
+};
 
 function Post(props){
+
+  function downvote(event) {
+    event.preventDefault();
+    props.onDownvote(props.id);
+  }
+
+  function upvote(event) {
+    event.preventDefault();
+    props.onUpvote(props.id);
+  }
+
   return(
-     <div style={postStyle}>
+    <div style={postStyle}>
       <h3>{props.title}</h3>
-        <img style={imageStyle} src={props.image}/>
+      <img style={imageStyle} src={props.image}/>
       <h5>{props.score}</h5>
+      <button onClick={downvote}>Downvote</button>
+      <button onClick={upvote}>Upvote</button>
     </div>
-  )
+  );
 }
 
 Post.propTypes={
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired
+  score: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  onDownvote: PropTypes.func.isRequired,
+  onUpvote: PropTypes.func.isRequired
 };
 
 export default Post;

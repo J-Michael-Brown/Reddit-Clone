@@ -4,63 +4,23 @@ import PostList from './PostList';
 import NewPostForm from './NewPostForm';
 import Header from './Header';
 
-// const MasterPostList=
-// [
-//   {
-//     title: 'The Incredible Shrinking Women',
-//     image: 'https://external-preview.redd.it/DQDVg56ZkQIdskmsOIYpA8NF6XvORc5iApBtwgXaZio.png?width=640&crop=smart&auto=webp&s=fceaad86df2df53dfa4d21464fd5c29fd2716134',
-//     score: 72,
-//     id: '1'
-//   },
-//   {
-//     title: 'The Food thats incredible',
-//     image: 'https://www.johnspizza.com/images/food/Food-Pizza.jpg',
-//     score: 100,
-//     id: '2'
-//   },
-//   {
-//     title: 'The Incredible town !!',
-//     image: 'https://media-cdn.tripadvisor.com/media/photo-s/12/66/0f/00/paseando-por-el-pueblo.jpg',
-//     score: 135,
-//     id: '3'
-//   }
-// ];
-
 const appStylesheet = {
   width: '650px',
   display: 'block',
   marginLeft: 'auto',
-  marginRight: 'auto',
-  // background: 'blue'
-}
+  marginRight: 'auto'
+};
 
 class App extends React.Component{
 
   constructor(props){
     super(props);
     this.state={
-      MasterPostList: [
-        // {
-        //   title: 'The Incredible Shrinking Women',
-        //   image: 'https://external-preview.redd.it/DQDVg56ZkQIdskmsOIYpA8NF6XvORc5iApBtwgXaZio.png?width=640&crop=smart&auto=webp&s=fceaad86df2df53dfa4d21464fd5c29fd2716134',
-        //   score: 72,
-        //   id: '1'
-        // },
-        // {
-        //   title: 'The Food thats incredible',
-        //   image: 'https://www.johnspizza.com/images/food/Food-Pizza.jpg',
-        //   score: 100,
-        //   id: '2'
-        // },
-        // {
-        //   title: 'The Incredible town !!',
-        //   image: 'https://media-cdn.tripadvisor.com/media/photo-s/12/66/0f/00/paseando-por-el-pueblo.jpg',
-        //   score: 135,
-        //   id: '3'
-        // }
-      ]
-    }
+      MasterPostList: []
+    };
     this.handleAddToMasterPostList = this.handleAddToMasterPostList.bind(this);
+    this.downvotePostInMasterPostList = this.downvotePostInMasterPostList.bind(this);
+    this.upvotePostInMasterPostList = this.upvotePostInMasterPostList.bind(this);
   }
 
   handleAddToMasterPostList(newPost) {
@@ -69,21 +29,40 @@ class App extends React.Component{
     this.setState({MasterPostList: newMasterPostList});
   }
 
-  downvotePostInPostList(postId){
+  downvotePostInMasterPostList(postId){
+    let newMasterPostList = this.state.MasterPostList.map((post) => {
+      if(post.id===postId) {
+        post.score--;
+      }
+      return post;
+    });
+    this.setState({MasterPostList: newMasterPostList});
+  }
 
+  upvotePostInMasterPostList(postId){
+    let newMasterPostList = this.state.MasterPostList.slice();
+    for (var postListIndex = 0; postListIndex < newMasterPostList.length; postListIndex++) {
+      if(newMasterPostList[postListIndex].id==postId){
+        newMasterPostList[postListIndex].score++;
+        break;
+      }
+    }
+    this.setState({MasterPostList: newMasterPostList});
   }
 
   render(){
     return (
       <div style={appStylesheet}>
-      <Header/>
-      <Switch>
-      <Route exact path='/' render={()=><PostList masterPostList={this.state.MasterPostList}/>}/>
-      <Route path='/new_post' render={()=><NewPostForm onNewPostCreation = {this.handleAddToMasterPostList}/>}/>
-      </Switch>
+        <Header/>
+        <Switch>
+          <Route exact path='/' render={()=><PostList masterPostList={this.state.MasterPostList}
+            onDownvote={this.downvotePostInMasterPostList} onUpvote={this.upvotePostInMasterPostList}/>}/>
+          <Route path='/new_post' render={()=><NewPostForm
+            onNewPostCreation={this.handleAddToMasterPostList}/>}/>
+        </Switch>
       </div>
-    )
+    );
   }
 
 }
-export default App
+export default App;
