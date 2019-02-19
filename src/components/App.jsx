@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PostList from './PostList';
+import NewPostForm from './NewPostForm';
+import Header from './Header';
 
 const MasterPostList=
 [
@@ -28,8 +30,10 @@ function App(){
 
   return (
     <div>
+      <Header/>
       <Switch>
-        <Route path='/' render={()=><PostList masterPostList={MasterPostList}/>}/>
+        <Route exact path='/' render={()=><PostList masterPostList={MasterPostList}/>}/>
+        <Route path='/new_post' render={()=><NewPostForm/>}/>
       </Switch>
     </div>
   )
