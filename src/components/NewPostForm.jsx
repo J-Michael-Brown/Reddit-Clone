@@ -1,13 +1,21 @@
 import React from 'react';
-// import { v4 } from 'uuid';
+import PropTypes from 'prop-types'
+import { v4 } from 'uuid';
 
-function NewPostForm() {
+function NewPostForm(props) {
   let _title = null;
   let _image = null;
 
+  function handleNewPostFormSubmission(event) {
+    event.preventDefault();
+    props.onNewPostCreation({title: _title.value, image:_image.value, score:0, id: v4()})
+    _title.value='';
+    _image.value='';
+  }
+
   return(
     <div>
-      <form>
+      <form onSubmit={handleNewPostFormSubmission}>
         <input
           type='text'
           id='title'
@@ -24,6 +32,10 @@ function NewPostForm() {
       </form>
     </div>
   )
+}
+
+NewPostForm.propTypes = {
+  onNewPostCreation: PropTypes.func.isRequired
 }
 
 export default NewPostForm;
