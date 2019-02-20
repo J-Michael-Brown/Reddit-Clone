@@ -9,6 +9,7 @@ function NewPostForm(props) {
   function handleNewPostFormSubmission(event) {
     event.preventDefault();
     props.onNewPostCreation({title: _title.value, image:_image.value, score:0, id: v4()});
+    // props.onPostChange();
     _title.value='';
     _image.value='';
   }
@@ -35,7 +36,8 @@ function NewPostForm(props) {
 }
 
 NewPostForm.propTypes = {
-  onNewPostCreation: PropTypes.func.isRequired
+  onNewPostCreation: PropTypes.func.isRequired,
+  onPostChange: PropTypes.func.isRequired
 };
 
 export default NewPostForm;

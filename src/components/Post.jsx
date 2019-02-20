@@ -24,11 +24,13 @@ function Post(props){
   function downvote(event) {
     event.preventDefault();
     props.onDownvote(props.id);
+    props.onPostChange();
   }
 
   function upvote(event) {
     event.preventDefault();
     props.onUpvote(props.id);
+    props.onPostChange();
   }
 
   return(
@@ -48,7 +50,8 @@ Post.propTypes={
   score: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   onDownvote: PropTypes.func.isRequired,
-  onUpvote: PropTypes.func.isRequired
+  onUpvote: PropTypes.func.isRequired,
+  onPostChange: PropTypes.func.isRequired
 };
 
 export default Post;

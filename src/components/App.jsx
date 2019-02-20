@@ -11,6 +11,7 @@ const appStylesheet = {
   marginRight: 'auto'
 };
 
+
 class App extends React.Component{
 
   constructor(props){
@@ -21,6 +22,7 @@ class App extends React.Component{
     this.handleAddToMasterPostList = this.handleAddToMasterPostList.bind(this);
     this.downvotePostInMasterPostList = this.downvotePostInMasterPostList.bind(this);
     this.upvotePostInMasterPostList = this.upvotePostInMasterPostList.bind(this);
+    this.sortByScore = this.sortByScore.bind(this);
   }
 
   handleAddToMasterPostList(newPost) {
@@ -50,15 +52,24 @@ class App extends React.Component{
     this.setState({MasterPostList: newMasterPostList});
   }
 
+  sortByScore(){
+    let newMasterPostList = this.state.MasterPostList.slice();
+    newMasterPostList.sort((a, b)=> b.score - a.score);
+    this.setState({MasterPostList: newMasterPostList});
+  }
+
   render(){
     return (
       <div style={appStylesheet}>
         <Header/>
         <Switch>
           <Route exact path='/' render={()=><PostList masterPostList={this.state.MasterPostList}
-            onDownvote={this.downvotePostInMasterPostList} onUpvote={this.upvotePostInMasterPostList}/>}/>
+            onDownvote={this.downvotePostInMasterPostList}
+            onUpvote={this.upvotePostInMasterPostList}
+            onPostChange={this.sortByScore}/>}/>
           <Route path='/new_post' render={()=><NewPostForm
-            onNewPostCreation={this.handleAddToMasterPostList}/>}/>
+            onNewPostCreation={this.handleAddToMasterPostList}
+            onPostChange={this.sortByScore}/>}/>
         </Switch>
       </div>
     );
